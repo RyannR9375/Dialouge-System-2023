@@ -6,10 +6,15 @@ using UnityEngine;
 
 public class SC_FPSController : MonoBehaviour
 {
+    [Header("Player Stats")]
     public float walkingSpeed = 7.5f;
+    private float walkingSpeedT;
     public float runningSpeed = 11.5f;
+    private float runningSpeedT;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
+
+    [Header("Player Sensitivity")]
     public Camera playerCamera;
     public float lookSpeed = 2.0f;
     private float lookSpeedT;
@@ -33,22 +38,25 @@ public class SC_FPSController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        //VARIABLES THAT HOLD THE ORIGINAL PLAYER STAT VALUES
         lookSpeedT = lookSpeed;
+        walkingSpeedT = walkingSpeed;
+        runningSpeedT = runningSpeed;
     }
 
     void CheckForInteraction()
     {
         if (Input.GetKeyDown(interactKey))
         {
-           EvtSystem.EventDispatcher.Raise<PlayerInteract>(
+            EvtSystem.EventDispatcher.AddListener<CursorMovement>(ToFreezeCursor);
+            EvtSystem.EventDispatcher.AddListener<FreezePlayerMovement>(ToFreezePlayerMovement);
+            EvtSystem.EventDispatcher.Raise<PlayerInteract>(
 
                 new PlayerInteract { interactPosition = gameObject.transform.position,
                                                interactDirection = gameObject.transform.forward,
                                                interactDistance = raycastDistance
                                              }
                 );
-
-            EvtSystem.EventDispatcher.AddListener<CursorMovement>(FreezeCursor);
         }
     }
 
@@ -96,26 +104,32 @@ public class SC_FPSController : MonoBehaviour
         CheckForInteraction();
     }
 
-    public void FreezeCursor(CursorMovement playerCursor)
+    public void ToFreezeCursor(CursorMovement cursor)
     {
-        playerCursor.lockMode = CursorLockMode.None;
-        playerCursor.canMove = true;
-        playerCursor.lookSpeed = 0f;
+        if (cursor.canMove)
+        {
+            //FREEZE CURSOR
+            cursor.lockMode = CursorLockMode.None;
+            cursor.lookSpeed = 0f;
 
-        lookSpeed = playerCursor.lookSpeed;
+            lookSpeed = cursor.lookSpeed;
+            Cursor.lockState = cursor.lockMode;
+            Cursor.visible = cursor.canMove;
+        }
+        else
+        {
+            //UNFREEZE CURSOR
+            cursor.lockMode = CursorLockMode.None;
+            lookSpeed = lookSpeedT;
 
-        Cursor.lockState = playerCursor.lockMode;
-        Cursor.visible   = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
+        }
     }
 
-    public void UnfreezeCursor(CursorMovement playerCursor)
+    public void ToFreezePlayerMovement(FreezePlayerMovement freezePlayer)
     {
-        playerCursor.lockMode = CursorLockMode.None;
-        playerCursor.canMove = true;
-
-        lookSpeed = lookSpeedT;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible   = false;
+        //CAN THE PLAYER MOVE?
+        canMove = freezePlayer.canMove;
     }
 }

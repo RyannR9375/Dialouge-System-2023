@@ -53,3 +53,9 @@ public class CursorMovement : EvtSystem.Event
     public float lookSpeed;
     public CursorLockMode lockMode;
 }
+
+public class FreezePlayerMovement : EvtSystem.Event
+{
+    public bool canMove;
+    public float moveSpeed;
+}

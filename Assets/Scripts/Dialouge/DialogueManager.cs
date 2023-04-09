@@ -72,7 +72,15 @@ public class DialogueManager : Singleton<DialogueManager>
         currentDialogue = lineToStart;
         currentTime = 0.0f;
 
-        EvtSystem.EventDispatcher.Raise<CursorMovement>(new CursorMovement());
+        //FREEZES CURSOR
+        CursorMovement cursor = new CursorMovement();
+        cursor.canMove = true;
+        EvtSystem.EventDispatcher.Raise<CursorMovement>(cursor);
+
+        //UNFREEZES PLAYER MOVEMENT
+        FreezePlayerMovement freezePlayer = new FreezePlayerMovement();
+        freezePlayer.canMove = false;
+        EvtSystem.EventDispatcher.Raise<FreezePlayerMovement>(freezePlayer);
     }
 
     private void PlayResponseLine(int currentResponseIndex)
@@ -129,7 +137,15 @@ public class DialogueManager : Singleton<DialogueManager>
             EvtSystem.EventDispatcher.Raise<DisableUI>(new DisableUI());
             currentDialogue = null;
 
-            EvtSystem.EventDispatcher.Raise<CursorMovement>(new CursorMovement());
+            //UNFREEZES CURSOR
+            CursorMovement cursor = new CursorMovement();
+            cursor.canMove = false;
+            EvtSystem.EventDispatcher.Raise<CursorMovement>(cursor);
+
+            //UNFREEZES PLAYER MOVEMENT
+            FreezePlayerMovement freezePlayer = new FreezePlayerMovement();
+            freezePlayer.canMove = true;
+            EvtSystem.EventDispatcher.Raise<FreezePlayerMovement>(freezePlayer);
         }
     }
 
