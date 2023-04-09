@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02f3392b1dd43840a51fa477b256fa9, type: 3}
+  m_Name: DialogueOne
+  m_EditorClassIdentifier: 
+  text: Hello There!
+  responses:
+  - {fileID: 11400000, guid: 865ace924dfa02b4a84edd4c8908816d, type: 2}
+  - {fileID: 11400000, guid: 37b5f5f390509364494ac2d22ffad03c, type: 2}
+  karmaScore: 0
+  dialogueAudio: {fileID: 8300000, guid: 968efc1efbb311d4d949e3337d77842a, type: 3}
+  startAudioSound: {fileID: 8300000, guid: 6e6116f788d64224ab7eea515da2cab9, type: 3}
+  character: 1

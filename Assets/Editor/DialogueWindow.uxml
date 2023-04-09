@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:GroupBox name="MainBox" style="height: 561px; flex-direction: row; flex-grow: 1; width: 594px;">
+        <ui:GroupBox name="MainContent" style="height: 546px; width: -64px; flex-grow: 1;" />
+        <ui:GroupBox name="DetailBox" style="height: 545px; width: 299px; flex-grow: 1; position: relative; top: 0; left: 0;" />
+    </ui:GroupBox>
+    <ui:GroupBox name="Buttons" style="flex-direction: row;">
+        <ui:Button text="Add" display-tooltip-when-elided="true" name="AddButton" />
+        <ui:Button text="Delete" display-tooltip-when-elided="true" name="DeleteButton" />
+    </ui:GroupBox>
+</ui:UXML>
